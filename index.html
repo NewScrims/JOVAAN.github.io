@@ -1116,6 +1116,7 @@
       <div class="stat"><div class="stat-number" data-text="Diarias">0</div><div class="stat-label">Sesiones</div></div>
       <div class="stat"><div class="stat-number" data-text="Fair Play">0</div><div class="stat-label">Prioridad</div></div>
       <div class="stat"><div class="stat-number" data-text="Staff">0</div><div class="stat-label">Activo 24/7</div></div>
+      <div class="stat"><div class="stat-number" id="visitCount">...</div><div class="stat-label">Visitas</div></div>
     </div>
   </section>
 
@@ -1315,10 +1316,11 @@
     <div class="streamers-grid">
       <div class="streamer-card">
         <div class="streamer-avatar">
-  <span class="fallback">C</span>
-  <img src="https://files.kick.com/images/user/32940368/profile_image/conversion/efb9a77a-cf62-441a-8eb1-799a91f6e75e-fullsize.webp" alt="CSseba" loading="lazy" onerror="this.style.display='none'">
-  <div class="live-dot"></div>
-</div>        <h3>CSseba</h3>
+          <span class="fallback">C</span>
+          <img src="https://files.kick.com/images/user/32940368/profile_image/conversion/efb9a77a-cf62-441a-8eb1-799a91f6e75e-fullsize.webp" alt="CSseba" loading="lazy" onerror="this.style.display='none'">
+          <div class="live-dot"></div>
+        </div>
+        <h3>CSseba</h3>
         <p class="streamer-role">GTA V Roleplay</p>
         <p class="streamer-desc">Streamea GTA V Roleplay en Kick. Seguilo para ver sus transmisiones en vivo.</p>
         <div class="streamer-links">
@@ -1561,6 +1563,35 @@
         e.preventDefault();
       }
     });
+
+    /* ========== CONTADOR DE VISITAS ========== */
+    const NAMESPACE = 'newscrims-droid.github.io';
+    const KEY = 'visitas-totales';
+
+    if (!localStorage.getItem('ns_visito')) {
+      fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`)
+        .then(r => r.json())
+        .then(data => {
+          const el = document.getElementById('visitCount');
+          if (el) el.textContent = data.value.toLocaleString('es-AR');
+          localStorage.setItem('ns_visito', 'true');
+        })
+        .catch(() => {
+          const el = document.getElementById('visitCount');
+          if (el) el.textContent = '...';
+        });
+    } else {
+      fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`)
+        .then(r => r.json())
+        .then(data => {
+          const el = document.getElementById('visitCount');
+          if (el) el.textContent = data.value.toLocaleString('es-AR');
+        })
+        .catch(() => {
+          const el = document.getElementById('visitCount');
+          if (el) el.textContent = '...';
+        });
+    }
 
     /* ========== CLIPS ========== */
     const CLIPS_APROBADOS = [];
