@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NEW SCRIMS - Comunidad competitiva de Fortnite. Scrims ordenadas, fair play y alto nivel.">
+  <title>NEW SCRIMS | Comunidad Competitiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #ff9ecd;
+      --pink-hover: #ffb3d9;
+      --bg: #0a0a0a;
+      --bg-card: #111;
+      --border: #222;
+      --text: #e8e8e8;
+      --text-muted: #a0a0a0;
+      --text-soft: #a8a8a8;
+      --glow: rgba(255,158,205,0.15);
+      --grid-color: rgba(255,158,205,0.06);
+    }
+    body.light {
+      --bg: #f5f5f7; --bg-card: #fff; --border: #e0e0e0;
+      --text: #1a1a1a; --text-muted: #666; --text-soft: #555;
+      --glow: rgba(255,158,205,0.25); --grid-color: rgba(255,158,205,0.12);
+    }
+    body.light header { background: rgba(245,245,247,0.96); }
+    body.light .nav-links a { color: #444; }
+    body.light .card-item h3, body.light .faq-question,
+    body.light .logo-text, body.light .clip-card h3,
+    body.light .streamer-card h3 { color: #1a1a1a; }
+    body.light .tabla-horarios th { background: #f0f0f0; }
+    body.light .regla-body li, body.light .regla-body p { color: #444; }
+    body.light .regla-body strong { color: #000; }
+    body.light footer { background: #ebebeb; border-top-color: #ddd; color: #555; }
+    body.light .footer-links a { color: #666; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.7; transition: background 0.4s, color 0.4s;
+      overflow-x: hidden;
+      -webkit-user-select: none; -moz-user-select: none;
+      -ms-user-select: none; user-select: none;
+      -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+    }
+    input, textarea, select {
+      -webkit-user-select: text; -moz-user-select: text;
+      -ms-user-select: text; user-select: text;
+    }
+
+    @media (pointer: fine) {
+      .cursor-ring {
+        position: fixed; top: 0; left: 0;
+        width: 30px; height: 30px;
+        border: 1.5px solid var(--pink);
+        border-radius: 50%; pointer-events: none; z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s, height 0.2s, background 0.2s, border-color 0.2s;
+        mix-blend-mode: difference;
+      }
+      .cursor-ring.hover {
+        width: 50px; height: 50px;
+        background: rgba(255,158,205,0.15);
+        border-color: var(--pink-hover);
+      }
+    }
+    @media (pointer: coarse) { .cursor-ring { display: none; } }
+
+    .scroll-progress {
+      position: fixed; top: 32px; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--pink), #ff6fb3);
+      z-index: 3000; transition: width 0.1s linear;
+      box-shadow: 0 0 10px var(--pink);
+    }
+
+    /* ============ BANNER DE ANUNCIOS ROSA ============ */
+    .anuncio-banner {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: linear-gradient(90deg, rgba(255,158,205,0.15), rgba(255,158,205,0.4), rgba(255,158,205,0.15));
+      border-bottom: 1px solid rgba(255,158,205,0.3);
+      color: #fff;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 1.5px;
+      overflow: hidden;
+      height: 32px;
+      display: flex; align-items: center;
+      z-index: 1500;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 16px rgba(255,158,205,0.2);
+      animation: bannerGlow 3s ease-in-out infinite;
+    }
+    @keyframes bannerGlow {
+      0%, 100% { box-shadow: 0 2px 16px rgba(255,158,205,0.2); }
+      50% { box-shadow: 0 2px 24px rgba(255,158,205,0.5); }
+    }
+    .anuncio-track {
+      display: flex; gap: 2rem;
+      white-space: nowrap;
+      animation: marquee 35s linear infinite;
+      padding-left: 100%;
+    }
+    .anuncio-track span { flex-shrink: 0; text-shadow: 0 0 8px rgba(255,158,205,0.6); }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    header {
+      background: rgba(10, 10, 10, 0.96);
+      backdrop-filter: blur(12px);
+      position: fixed; width: 100%; top: 32px; z-index: 1000;
+      border-bottom: 1px solid #1f1f1f;
+      transition: background 0.4s;
+    }
+    nav {
+      max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem;
+    }
+    .logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex-shrink: 0; }
+    .logo-icon { width: 34px; height: 34px; flex-shrink: 0; }
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--text);
+      position: relative; overflow: hidden;
+    }
+    .logo-text::after {
+      content: ''; position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,158,205,0.5), transparent);
+      animation: logoShine 3s infinite;
+    }
+    @keyframes logoShine { 0% { left: -100%; } 50%, 100% { left: 200%; } }
+
+    .nav-links { display: flex; gap: 1.4rem; list-style: none; }
+    .nav-links a {
+      color: #cfcfcf; text-decoration: none;
+      font-weight: 500; font-size: 0.9rem;
+      transition: color 0.25s; white-space: nowrap;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute;
+      bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--pink);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--pink);
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--pink); }
+    .nav-actions { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+
+    .theme-toggle {
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--pink); width: 38px; height: 38px;
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.7rem; cursor: pointer; transition: all 0.3s;
+      font-weight: 700;
+    }
+    .theme-toggle:hover { border-color: var(--pink); transform: rotate(20deg); }
+
+    .btn {
+      position: relative; overflow: hidden;
+      background: var(--pink); color: #0a0a0a;
+      padding: 0.6rem 1.2rem; border-radius: 6px;
+      font-weight: 600; text-decoration: none;
+      transition: all 0.25s; font-size: 0.9rem;
+      display: inline-block; border: none; cursor: pointer;
+      animation: btnGlow 3s ease-in-out infinite;
+    }
+    @keyframes btnGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,158,205,0); }
+      50% { box-shadow: 0 0 20px rgba(255,158,205,0.4); }
+    }
+    .btn:hover { background: var(--pink-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,158,205,0.5); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--pink); color: var(--pink); animation: none; }
+    .btn-outline:hover { background: var(--pink); color: #0a0a0a; }
+
+    .ripple {
+      position: absolute; border-radius: 50%;
+      transform: scale(0); animation: rippleAnim 0.6s linear;
+      background: rgba(255,255,255,0.6); pointer-events: none;
+    }
+    @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span { width: 24px; height: 2px; background: var(--pink); transition: 0.3s; border-radius: 1px; }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============ HERO ============ */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; text-align: center;
+      background: var(--bg); padding: 10rem 2rem 4rem;
+      position: relative; overflow: hidden;
+      transition: background 0.4s;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+      pointer-events: none;
+      animation: gridPulse 6s ease-in-out infinite;
+    }
+    @keyframes gridPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .hero::after {
+      content: ''; position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,158,205,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: heroGlow 8s ease-in-out infinite;
+    }
+    @keyframes heroGlow {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 720px; }
+    .hero-icon { width: 72px; height: 72px; margin: 0 auto 1.4rem; display: block; animation: heroIconFloat 4s ease-in-out infinite; }
+    @keyframes heroIconFloat {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 4.8rem);
+      margin-bottom: 1rem; color: var(--pink);
+      letter-spacing: -0.03em;
+      position: relative;
+      animation: titleShimmer 4s ease-in-out infinite;
+    }
+    @keyframes titleShimmer {
+      0%, 100% { text-shadow: 0 0 20px rgba(255,158,205,0.3); }
+      50% { text-shadow: 0 0 40px rgba(255,158,205,0.7), 0 0 60px rgba(255,158,205,0.4); }
+    }
+    .hero-content p { font-size: 1.2rem; margin-bottom: 1.8rem; color: var(--text-muted); min-height: 2.6rem; }
+    .typewriter { color: var(--pink); font-weight: 600; }
+    .typewriter::after { content: '|'; color: var(--pink); animation: blink 0.8s infinite; margin-left: 2px; }
+    @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.5rem; }
+
+    .discord-live {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.5rem;
+      margin: 1rem auto 0; display: inline-flex;
+      align-items: center; gap: 0.8rem;
+      font-size: 0.9rem; transition: background 0.4s;
+      position: relative;
+    }
+    .discord-live::before {
+      content: ''; position: absolute; inset: -1px;
+      border-radius: 12px;
+      background: linear-gradient(45deg, var(--pink), transparent, var(--pink));
+      z-index: -1; opacity: 0.3;
+      animation: borderRotate 4s linear infinite;
+    }
+    @keyframes borderRotate {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+    .discord-live .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #3ba55d; animation: pulseDot 1.5s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59,165,93,0.6); }
+      50% { box-shadow: 0 0 0 8px rgba(59,165,93,0); }
+    }
+    .discord-live strong { color: var(--pink); }
+
+    .countdown {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem 2rem;
+      margin: 1.5rem auto 0; display: inline-block;
+      min-width: 320px; transition: background 0.4s;
+      animation: countdownPulse 3s ease-in-out infinite;
+    }
+    @keyframes countdownPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,158,205,0); }
+      50% { box-shadow: 0 0 30px rgba(255,158,205,0.3); }
+    }
+    .countdown-title {
+      font-size: 0.85rem; color: var(--text-muted);
+      margin-bottom: 0.7rem; letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .countdown-time {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; color: var(--pink); font-weight: 700;
+    }
+    .countdown-selector {
+      display: flex; gap: 0.5rem; justify-content: center;
+      margin-bottom: 0.8rem; flex-wrap: wrap;
+    }
+    .countdown-selector button {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-soft); padding: 0.3rem 0.8rem;
+      border-radius: 20px; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.25s;
+      font-family: inherit;
+    }
+    .countdown-selector button.active {
+      border-color: var(--pink); color: var(--pink);
+      background: rgba(255,158,205,0.1);
+      animation: activePulse 2s ease-in-out infinite;
+    }
+    @keyframes activePulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,158,205,0); }
+      50% { box-shadow: 0 0 12px rgba(255,158,205,0.5); }
+    }
+    .countdown-selector button:hover { border-color: var(--pink); }
+
+    .toast {
+      position: fixed; bottom: 100px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--pink); color: #0a0a0a;
+      padding: 0.8rem 1.6rem; border-radius: 8px;
+      font-weight: 600; opacity: 0; pointer-events: none;
+      transition: all 0.3s; z-index: 2000;
+      box-shadow: 0 0 24px rgba(255,158,205,0.6);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============ BLOQUES ============ */
+    .bloque {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .bloque-header { text-align: center; margin-bottom: 3rem; }
+    .bloque-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--pink);
+      margin-bottom: 0.5rem;
+      animation: titleShimmer 5s ease-in-out infinite;
+    }
+    .bloque-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .bloque-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      margin: 2rem auto;
+      max-width: 1100px;
+      opacity: 0.3;
+      animation: dividerPulse 4s ease-in-out infinite;
+    }
+    @keyframes dividerPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+    .seccion-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--pink);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { transform: translateX(-60px); }
+    .reveal-left.visible { transform: translateX(0); }
+    .reveal-right { transform: translateX(60px); }
+    .reveal-right.visible { transform: translateX(0); }
+    .reveal-zoom { transform: scale(0.9); }
+    .reveal-zoom.visible { transform: scale(1); }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
+    .stat {
+      text-align: center; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem 1rem; transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .stat::before {
+      content: ''; position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,158,205,0.15), transparent);
+      animation: statShine 4s infinite;
+    }
+    @keyframes statShine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+    .stat:hover { border-color: var(--pink); transform: translateY(-4px); }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--pink); font-weight: 700; position: relative; }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; position: relative; }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card-item {
+      position: relative; overflow: hidden;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      transition: all 0.3s, background 0.4s;
+    }
+    .card-item::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 60%);
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .card-item::after {
+      content: ''; position: absolute;
+      top: 0; left: -100%; width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      animation: cardTopShine 5s infinite;
+    }
+    @keyframes cardTopShine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+    .card-item:hover::before { opacity: 1; }
+    .card-item:hover { border-color: var(--pink); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(255,158,205,0.2); }
+    .card-item-tag {
+      display: inline-block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--pink);
+      font-weight: 700; margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .card-item h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text); font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-item p { color: var(--text-soft); font-size: 0.95rem; }
+    .card-item .tag {
+      display: inline-block; margin-top: 0.8rem;
+      background: rgba(255,158,205,0.15); color: var(--pink);
+      font-size: 0.75rem; font-weight: 600;
+      padding: 0.25rem 0.7rem; border-radius: 4px;
+      animation: tagPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes tagPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,158,205,0); }
+      50% { box-shadow: 0 0 12px rgba(255,158,205,0.5); }
+    }
+
+    .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+    .tabla-horarios {
+      width: 100%; border-collapse: collapse;
+      background: var(--bg-card); min-width: 480px;
+      transition: background 0.4s;
+    }
+    .tabla-horarios th, .tabla-horarios td {
+      padding: 1rem 1.2rem; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .tabla-horarios th { background: #161616; color: var(--pink); font-weight: 600; }
+    .tabla-horarios tr:last-child td { border-bottom: none; }
+    .tabla-horarios tbody tr:hover { background: rgba(255,158,205,0.05); }
+
+    .pasos { display: grid; gap: 1rem; margin-top: 2rem; }
+    .paso {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      transition: border-color 0.25s, background 0.4s;
+      position: relative; overflow: hidden;
+    }
+    .paso::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; height: 100%; width: 3px;
+      background: var(--pink);
+      transform: scaleY(0); transform-origin: top;
+      transition: transform 0.3s;
+      box-shadow: 0 0 8px var(--pink);
+    }
+    .paso:hover::before { transform: scaleY(1); }
+    .paso:hover { border-color: var(--pink); }
+    .paso-num {
+      background: var(--pink); color: #0a0a0a;
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; flex-shrink: 0; font-size: 0.9rem;
+      animation: numPulse 3s ease-in-out infinite;
+    }
+    @keyframes numPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,158,205,0); }
+      50% { box-shadow: 0 0 16px rgba(255,158,205,0.6); }
+    }
+    .paso h3 { font-size: 1rem; margin-bottom: 0.3rem; color: var(--text); }
+    .paso p { color: var(--text-soft); font-size: 0.9rem; }
+
+    /* CLIPS */
+    .clips-header {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .clips-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .clips-filters button {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-soft); padding: 0.4rem 0.9rem;
+      border-radius: 20px; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.25s;
+      font-family: inherit;
+    }
+    .clips-filters button.active {
+      border-color: var(--pink); color: var(--pink);
+      background: rgba(255,158,205,0.1);
+      box-shadow: 0 0 12px rgba(255,158,205,0.3);
+    }
+    .clips-filters button:hover { border-color: var(--pink); }
+    .clips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .clip-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: all 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .clip-card:hover {
+      border-color: var(--pink);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255,158,205,0.25);
+    }
+    .clip-embed {
+      position: relative;
+      width: 100%; padding-bottom: 56.25%;
+      background: #000; overflow: hidden;
+    }
+    .clip-embed iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    .clip-info {
+      padding: 1rem 1.2rem 1.2rem;
+      flex: 1; display: flex; flex-direction: column;
+    }
+    .clip-platform {
+      display: inline-block;
+      background: rgba(255,158,205,0.15); color: var(--pink);
+      font-size: 0.65rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      align-self: flex-start;
+    }
+    .clip-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text); font-size: 1.05rem;
+      margin-bottom: 0.4rem; line-height: 1.3;
+    }
+    .clip-author { color: var(--pink); font-size: 0.8rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .clip-desc { color: var(--text-soft); font-size: 0.85rem; flex: 1; }
+    .no-clips {
+      text-align: center; color: var(--text-muted);
+      padding: 3rem 2rem; grid-column: 1 / -1;
+      background: var(--bg-card); border: 1px dashed var(--border);
+      border-radius: 12px;
+    }
+
+    /* STREAMERS */
+    .streamers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .streamer-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem; text-align: center;
+      transition: all 0.3s, background 0.4s;
+      position: relative; overflow: hidden;
+    }
+    .streamer-card::before {
+      content: ''; position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,158,205,0.1), transparent 60%);
+      animation: streamerGlow 6s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes streamerGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .streamer-card:hover { border-color: var(--pink); transform: translateY(-4px); }
+    .streamer-avatar {
+      width: 90px; height: 90px;
+      background: linear-gradient(135deg, var(--pink), #ff6fb3);
+      border-radius: 50%; margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: #0a0a0a;
+      position: relative;
+      animation: avatarFloat 4s ease-in-out infinite;
+      overflow: hidden;
+      border: 3px solid var(--pink);
+      box-shadow: 0 0 20px rgba(255,158,205,0.4);
+    }
+    @keyframes avatarFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .streamer-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+    .streamer-avatar .fallback {
+      position: absolute;
+      inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 0;
+    }
+    .streamer-avatar img {
+      position: relative;
+      z-index: 1;
+    }
+    .live-dot {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #ff2d55; border: 2px solid var(--bg-card);
+      animation: livePulse 1.5s infinite;
+      z-index: 3;
+    }
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,45,85,0.7); }
+      50% { box-shadow: 0 0 0 12px rgba(255,45,85,0); }
+    }
+    .streamer-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text); font-size: 1.3rem; margin-bottom: 0.3rem;
+    }
+    .streamer-role { color: var(--pink); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.8rem; }
+    .streamer-desc { color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.2rem; }
+    .streamer-links { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* REFERIDOS */
+    .referidos-box {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      max-width: 700px; margin: 0 auto;
+      transition: background 0.4s;
+      position: relative;
+    }
+    .referidos-box::before {
+      content: ''; position: absolute; inset: -2px;
+      border-radius: 12px;
+      background: linear-gradient(45deg, var(--pink), transparent, var(--pink));
+      z-index: -1; opacity: 0.4;
+      animation: borderRotate 6s linear infinite;
+    }
+    .referidos-box > p {
+      text-align: center; color: var(--text-soft);
+      margin-bottom: 1.5rem;
+    }
+    .referido-link-box { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .referido-link-box input {
+      flex: 1; min-width: 200px;
+      padding: 0.8rem 1rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: inherit; font-size: 0.9rem; outline: none;
+    }
+    .referido-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .referido-stat {
+      background: rgba(255,158,205,0.08);
+      border: 1px solid rgba(255,158,205,0.2);
+      border-radius: 10px; padding: 1.2rem; text-align: center;
+      animation: statPulse 4s ease-in-out infinite;
+    }
+    @keyframes statPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,158,205,0); }
+      50% { box-shadow: 0 0 20px rgba(255,158,205,0.3); }
+    }
+    .referido-num {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--pink); font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+    .referido-label {
+      font-size: 0.8rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .referido-info {
+      background: rgba(255,158,205,0.05);
+      border-left: 3px solid var(--pink);
+      border-radius: 0 8px 8px 0;
+      padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;
+    }
+    .referido-info h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--pink); margin-bottom: 0.8rem; font-size: 1.1rem;
+    }
+    .referido-info ol {
+      padding-left: 1.2rem; color: var(--text-soft);
+      font-size: 0.9rem; line-height: 1.7;
+    }
+    .referido-info ol ul { padding-left: 1.2rem; margin-top: 0.4rem; list-style: none; }
+    .referido-info ol ul li { padding-left: 0.8rem; position: relative; }
+    .referido-info ol ul li::before {
+      content: "→"; position: absolute; left: 0;
+      color: var(--pink); font-weight: 700;
+    }
+    .referido-info strong { color: var(--text); }
+    .referido-share { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+    .referido-share .btn { font-size: 0.85rem; padding: 0.5rem 1rem; animation: none; }
+    .referido-share .btn:hover { animation: btnGlow 1.5s ease-in-out infinite; }
+
+    /* FORMULARIOS */
+    .form-container {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      max-width: 600px; margin: 0 auto;
+      transition: background 0.4s;
+      position: relative;
+    }
+    .form-container h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--pink); font-size: 1.4rem;
+      margin-bottom: 0.5rem; text-align: center;
+    }
+    .form-container > p {
+      color: var(--text-soft); text-align: center;
+      margin-bottom: 1.5rem; font-size: 0.95rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; margin-bottom: 0.4rem;
+      font-size: 0.9rem; color: var(--text); font-weight: 500;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 0.8rem 1rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: inherit; font-size: 0.95rem;
+      outline: none; transition: all 0.3s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(255,158,205,0.15), 0 0 16px rgba(255,158,205,0.3);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select { cursor: pointer; }
+    .form-actions { text-align: center; margin-top: 1.5rem; }
+    .form-status {
+      text-align: center; margin-top: 1rem;
+      font-size: 0.9rem; min-height: 1.4rem;
+    }
+    .form-status.success { color: #3ba55d; }
+    .form-status.error { color: #ed4245; }
+
+    .checkbox-group {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      margin: 1.2rem 0; font-size: 0.85rem;
+      color: var(--text-soft); line-height: 1.5;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: auto; margin-top: 3px;
+      accent-color: var(--pink); cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; margin-bottom: 1rem;
+      overflow: hidden; transition: background 0.4s, border-color 0.3s;
+    }
+    .faq-item:hover { border-color: rgba(255,158,205,0.4); }
+    .faq-item.active { border-color: var(--pink); box-shadow: 0 0 20px rgba(255,158,205,0.15); }
+    .faq-question {
+      width: 100%; padding: 1.3rem 1.5rem;
+      cursor: pointer; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--text); background: none; border: none;
+      font-size: 1rem; font-family: inherit;
+      text-align: left; transition: color 0.25s;
+    }
+    .faq-question:hover { color: var(--pink); }
+    .faq-icon { font-size: 1.4rem; transition: transform 0.3s; color: var(--pink); flex-shrink: 0; margin-left: 1rem; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 1.5rem; color: var(--text-soft);
+    }
+    .faq-item.active .faq-answer { max-height: 280px; padding: 0 1.5rem 1.4rem; }
+
+    /* REGLAS */
+    .reglas-intro {
+      text-align: center; color: var(--text-soft);
+      max-width: 700px; margin: 0 auto 2.5rem; font-size: 1.05rem;
+    }
+    .reglas-search { position: relative; max-width: 500px; margin: 0 auto 2rem; }
+    .reglas-search input {
+      width: 100%; padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 30px; color: var(--text);
+      font-family: inherit; font-size: 0.95rem;
+      outline: none; transition: all 0.3s;
+    }
+    .reglas-search input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,158,205,0.15), 0 0 20px rgba(255,158,205,0.3); }
+    .reglas-search input::placeholder { color: var(--text-muted); }
+    .reglas-search .icon {
+      position: absolute; left: 1rem; top: 50%;
+      transform: translateY(-50%); color: var(--pink);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
+    }
+    .reglas-search .clear {
+      position: absolute; right: 1rem; top: 50%;
+      transform: translateY(-50%); color: var(--text-muted);
+      cursor: pointer; font-size: 1rem; display: none;
+    }
+    .reglas-search .clear.visible { display: block; }
+    .no-results {
+      text-align: center; color: var(--text-muted);
+      padding: 2rem; display: none;
+    }
+    .no-results.visible { display: block; }
+    .reglas-container {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: background 0.4s;
+    }
+    .regla-categoria { border-bottom: 1px solid var(--border); }
+    .regla-categoria:last-child { border-bottom: none; }
+    .regla-categoria.hidden { display: none; }
+    .regla-header {
+      width: 100%; padding: 1.4rem 1.8rem;
+      background: none; border: none; color: var(--pink);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; text-align: left;
+      transition: background 0.2s;
+    }
+    .regla-header:hover { background: rgba(255,158,205,0.06); }
+    .regla-header .arrow { transition: transform 0.3s; font-size: 1rem; }
+    .regla-categoria.active .arrow { transform: rotate(180deg); }
+    .regla-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease; padding: 0 1.8rem;
+    }
+    .regla-categoria.active .regla-body { max-height: 800px; padding: 0 1.8rem 1.8rem; }
+    .regla-body p { color: var(--text-soft); margin-bottom: 1rem; font-size: 0.95rem; }
+    .regla-body ul { list-style: none; }
+    .regla-body li {
+      margin-bottom: 0.9rem; padding-left: 1.3rem;
+      position: relative; color: var(--text-soft);
+      font-size: 0.97rem; line-height: 1.6;
+    }
+    .regla-body li::before {
+      content: "–"; position: absolute; left: 0;
+      color: var(--pink); font-weight: 700;
+    }
+    .regla-body strong { color: var(--text); }
+    .regla-nota {
+      background: rgba(255,158,205,0.08);
+      border: 1px solid rgba(255,158,205,0.2);
+      border-radius: 8px; padding: 1rem 1.3rem;
+      margin-top: 1rem; color: var(--text-soft); font-size: 0.95rem;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #080808; text-align: center;
+      padding: 3rem 2rem; border-top: 1px solid #1a1a1a;
+      color: #666; font-size: 0.9rem;
+      transition: background 0.4s;
+      position: relative;
+    }
+    .footer::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      animation: dividerPulse 4s ease-in-out infinite;
+    }
+    .footer-links {
+      display: flex; justify-content: center;
+      gap: 1.6rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .footer-links a { color: #999; font-size: 0.9rem; text-decoration: none; transition: color 0.25s; }
+    .footer-links a:hover { color: var(--pink); text-shadow: 0 0 8px var(--pink); }
+
+    /* FLOTANTES */
+    .float-discord {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--pink); color: #0a0a0a;
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(255,158,205,0.5);
+      z-index: 999; transition: all 0.3s;
+      animation: pulseDiscord 2.5s infinite;
+      font-weight: 700; font-size: 0.7rem; letter-spacing: 0.5px;
+    }
+    @keyframes pulseDiscord {
+      0%, 100% { box-shadow: 0 6px 20px rgba(255,158,205,0.35); transform: scale(1); }
+      50% { box-shadow: 0 6px 32px rgba(255,158,205,0.8); transform: scale(1.05); }
+    }
+    .float-discord:hover { transform: scale(1.15); background: var(--pink-hover); }
+
+    .float-home {
+      position: fixed; bottom: 28px; left: 28px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--pink);
+      color: var(--pink);
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
+      font-weight: 700; font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-decoration: none;
+      z-index: 999;
+      transition: all 0.3s;
+      display: flex; align-items: center; gap: 0.4rem;
+      box-shadow: 0 4px 20px rgba(255,158,205,0.25);
+      animation: homePulse 3s ease-in-out infinite;
+    }
+    @keyframes homePulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(255,158,205,0.2); }
+      50% { box-shadow: 0 4px 28px rgba(255,158,205,0.6); }
+    }
+    .float-home::before {
+      content: '↑';
+      font-size: 1rem;
+    }
+    .float-home:hover {
+      background: var(--pink); color: #0a0a0a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(255,158,205,0.6);
+    }
+
+    .back-to-top {
+      position: fixed; bottom: 100px; right: 28px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--pink); width: 48px; height: 48px;
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; pointer-events: none;
+      transition: all 0.3s; z-index: 998; font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top:hover { border-color: var(--pink); background: rgba(255,158,205,0.1); box-shadow: 0 0 20px rgba(255,158,205,0.4); }
+
+    /* TRYHARD */
+    body.tryhard {
+      --pink: #ff2d55;
+      --pink-hover: #ff4d70;
+      --glow: rgba(255,45,85,0.2);
+      --grid-color: rgba(255,45,85,0.1);
+    }
+    body.tryhard .hero-content h1 { animation: tryhardPulse 0.8s infinite; }
+    @keyframes tryhardPulse {
+      0%, 100% { text-shadow: 0 0 10px var(--pink); }
+      50% { text-shadow: 0 0 30px var(--pink), 0 0 60px var(--pink); }
+    }
+    body.tryhard .bloque-titulo { animation: tryhardPulse 1.2s infinite; }
+    body.tryhard .btn { animation: tryhardPulse 0.6s infinite; }
+
+    .confetti {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--pink); top: -10px;
+      pointer-events: none; z-index: 5000;
+      animation: confettiFall 3s linear forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    @media (max-width: 1000px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.82rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: 102px; right: -100%;
+        background: var(--bg-card); width: 280px;
+        height: calc(100vh - 102px); flex-direction: column;
+        padding: 2rem; gap: 1.5rem;
+        transition: right 0.3s ease;
+        border-left: 1px solid var(--border);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.4);
+      }
+      .nav-links.active { right: 0; }
+      .hamburger { display: flex; }
+      .btn.nav-btn { display: none; }
+      .bloque { padding: 4rem 1.5rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .clips-grid { grid-template-columns: 1fr; }
+      .clips-header { flex-direction: column; align-items: flex-start; }
+      .referido-stats { grid-template-columns: 1fr; }
+      .float-home { font-size: 0.65rem; padding: 0.5rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- BANNER DE ANUNCIOS ROSA -->
+  <div class="anuncio-banner">
+    <div class="anuncio-track">
+      <span>PRÓXIMA SCRIM EN 17:00</span>
+      <span>·</span>
+      <span>NUEVA MODALIDAD SOLO DISPONIBLE</span>
+      <span>·</span>
+      <span>SEGUÍ A CSEBA EN KICK · GTA V ROLEPLAY</span>
+      <span>·</span>
+      <span>INVITÁ AMIGOS Y GANÁ RECOMPENSAS</span>
+      <span>·</span>
+      <span>PRÓXIMA SCRIM EN 17:00</span>
+      <span>·</span>
+      <span>NUEVA MODALIDAD SOLO DISPONIBLE</span>
+      <span>·</span>
+      <span>SEGUÍ A CSEBA EN KICK · GTA V ROLEPLAY</span>
+      <span>·</span>
+      <span>INVITÁ AMIGOS Y GANÁ RECOMPENSAS</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <header>
+    <nav>
+      <a href="#" class="logo">
+        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M24 4L8 12V24C8 34 15 42 24 44C33 42 40 34 40 24V12L24 4Z" stroke="#ff9ecd" stroke-width="2.5" fill="none"/>
+          <path d="M17 17V31H21.2V22.8L27.8 31H32V17H27.8V25.2L21.2 17H17Z" fill="#ff9ecd"/>
+        </svg>
+        <span class="logo-text">NEW SCRIMS</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#comunidad">Comunidad</a></li>
+        <li><a href="#contenido">Contenido</a></li>
+        <li><a href="#soporte">Soporte</a></li>
+        <li><a href="#reglas">Reglas</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">DIA</button>
+        <a href="https://discord.gg/zMFhSRBjVB" class="btn nav-btn" target="_blank" rel="noopener noreferrer" id="joinBtn">Unirse</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ============ INICIO ============ -->
+  <section class="hero">
+    <div class="hero-content">
+      <svg class="hero-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M24 4L8 12V24C8 34 15 42 24 44C33 42 40 34 40 24V12L24 4Z" stroke="#ff9ecd" stroke-width="2.2" fill="none"/>
+        <path d="M17 17V31H21.2V22.8L27.8 31H32V17H27.8V25.2L21.2 17H17Z" fill="#ff9ecd"/>
+      </svg>
+      <h1>NEW SCRIMS</h1>
+      <p>Scrims competitivas de Fortnite.<br><span class="typewriter" id="typewriter"></span></p>
+      
+      <div class="hero-buttons">
+        <a href="https://discord.gg/zMFhSRBjVB" class="btn" target="_blank" rel="noopener noreferrer" id="joinBtn2">Entrar al Discord</a>
+        <button class="btn btn-outline" id="copyDiscordBtn">Copiar link</button>
+      </div>
+
+      <div class="discord-live">
+        <span class="dot"></span>
+        <span><strong id="discordMembers">500+</strong> online · <strong id="discordTotal">12.587</strong> miembros</span>
+      </div>
+
+      <div class="countdown" aria-live="polite">
+        <div class="countdown-selector" id="countdownSelector">
+          <button data-type="duo" class="active">Dúo</button>
+          <button data-type="trio">Trío</button>
+          <button data-type="solo">Solo</button>
+          <button data-type="reload">Reload</button>
+        </div>
+        <div class="countdown-title">Próxima scrim (<span id="countdownType">Dúo</span>) en</div>
+        <div class="countdown-time" id="countdown">Cargando...</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal reveal-zoom" style="max-width: 1100px; margin: 0 auto; padding: 3rem 2rem;">
+    <div class="stats">
+      <div class="stat"><div class="stat-number" data-count="12587" data-prefix="+">0</div><div class="stat-label">Miembros</div></div>
+      <div class="stat"><div class="stat-number" data-text="Diarias">0</div><div class="stat-label">Sesiones</div></div>
+      <div class="stat"><div class="stat-number" data-text="Fair Play">0</div><div class="stat-label">Prioridad</div></div>
+      <div class="stat"><div class="stat-number" data-text="Staff">0</div><div class="stat-label">Activo 24/7</div></div>
+    </div>
+  </section>
+
+  <div class="bloque-divider"></div>
+
+  <!-- ============ LA COMUNIDAD ============ -->
+  <div class="bloque reveal" id="comunidad">
+    <div class="bloque-header">
+      <h2 class="bloque-titulo">La Comunidad</h2>
+      <p class="bloque-sub">Todo lo que necesitás saber para participar: zonas de juego, modalidades, horarios y cómo arrancar.</p>
+    </div>
+
+    <h3 class="seccion-titulo">Zonas de Juego</h3>
+    <div class="grid-cards">
+      <div class="card-item">
+        <span class="card-item-tag">01</span>
+        <h3>Early Game</h3>
+        <p>1.ª a 2.ª zona. Loot, drops y respeto de spots. Acá se define el fair play.</p>
+        <span class="tag">1.ª - 2.ª Zona</span>
+      </div>
+      <div class="card-item">
+        <span class="card-item-tag">02</span>
+        <h3>Mid Game</h3>
+        <p>2.ª a 5.ª zona. Rotaciones, posicionamiento y decisiones estratégicas.</p>
+        <span class="tag">2.ª - 5.ª Zona</span>
+      </div>
+      <div class="card-item">
+        <span class="card-item-tag">03</span>
+        <h3>End Game</h3>
+        <p>5.ª zona en adelante. Peleas por altura, builds y control de zona final.</p>
+        <span class="tag">5.ª Zona+</span>
+      </div>
+    </div>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Modalidades</h3>
+    <div class="grid-cards">
+      <div class="card-item">
+        <span class="card-item-tag">DUO</span>
+        <h3>Dúo</h3>
+        <p>La modalidad principal. Sesiones ordenadas y competitivas.</p>
+        <span class="tag">Activa</span>
+      </div>
+      <div class="card-item">
+        <span class="card-item-tag">TRIO</span>
+        <h3>Trío</h3>
+        <p>Sesiones de tres jugadores. Mismo fair play y reglas.</p>
+        <span class="tag">Activa</span>
+      </div>
+      <div class="card-item">
+        <span class="card-item-tag">SOLO</span>
+        <h3>Solo</h3>
+        <p>Scrims individuales. Demostrá tu nivel sin depender de nadie.</p>
+        <span class="tag">Activa</span>
+      </div>
+      <div class="card-item">
+        <span class="card-item-tag">RLD</span>
+        <h3>Reload</h3>
+        <p>Modalidad Reload disponible en las sesiones.</p>
+        <span class="tag">Activa</span>
+      </div>
+      <div class="card-item" style="opacity:0.7; border-style:dashed;">
+        <span class="card-item-tag">CLSD</span>
+        <h3>Closed</h3>
+        <p>Próximamente. Solo los mejores según rango.</p>
+        <span class="tag">Próximamente</span>
+      </div>
+    </div>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Horarios</h3>
+    <div class="table-wrapper">
+      <table class="tabla-horarios">
+        <thead>
+          <tr><th>Día</th><th>Horario</th><th>Tipo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lunes a Viernes</td><td>17:00 → 00:00</td><td>Scrims Dúo / Trío / Solo</td></tr>
+          <tr><td>Viernes a Domingo</td><td>18:20 → 03:00</td><td>Scrims Nocturnas + Reload</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="text-align:center; margin-top:1.2rem; color:var(--text-muted); font-size:0.85rem;">
+      Horarios en <strong style="color:var(--pink);">Argentina (ART · UTC-3)</strong>
+    </p>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Cómo Participar</h3>
+    <div class="pasos">
+      <div class="paso">
+        <div class="paso-num">1</div>
+        <div>
+          <h3>Unite al Discord</h3>
+          <p>Entrá al servidor con el link de invitación y leé las reglas del canal de bienvenida.</p>
+        </div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">2</div>
+        <div>
+          <h3>Verificate con Yunite</h3>
+          <p>Reaccioná al mensaje de verificación y vinculá tu cuenta de Fortnite.</p>
+        </div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">3</div>
+        <div>
+          <h3>Hacé el check-in</h3>
+          <p>Antes de cada sesión, realizá el check-in en el canal correspondiente.</p>
+        </div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">4</div>
+        <div>
+          <h3>Respetá tu spot</h3>
+          <p>Una vez asignado el spot, aterrizá ahí y seguí todas las reglas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bloque-divider"></div>
+
+  <!-- ============ CONTENIDO ============ -->
+  <div class="bloque reveal" id="contenido">
+    <div class="bloque-header">
+      <h2 class="bloque-titulo">Contenido</h2>
+      <p class="bloque-sub">Clips de la comunidad, streamers oficiales y sistema de referidos.</p>
+    </div>
+
+    <h3 class="seccion-titulo">Clips de la Comunidad</h3>
+    <div style="text-align:center; margin-bottom: 2rem;">
+      <button class="btn" id="openClipForm">Subí tu clip</button>
+    </div>
+
+    <div id="clipFormWrap" style="display:none; max-width: 600px; margin: 0 auto 3rem;">
+      <div class="form-container">
+        <h3>Subí tu clip</h3>
+        <p>Pegá el link de tu clip. El staff lo revisa antes de publicarlo.</p>
+        <form id="clipForm">
+          <div class="form-group">
+            <label for="clipNick">Tu nick en Fortnite / Discord</label>
+            <input type="text" id="clipNick" name="Nick" placeholder="Ej: Jovaan" required>
+          </div>
+          <div class="form-group">
+            <label for="clipTitle">Título del clip</label>
+            <input type="text" id="clipTitle" name="Titulo" placeholder="Ej: Clutch 1v3 en end game" maxlength="80" required>
+          </div>
+          <div class="form-group">
+            <label for="clipUrl">Link del clip</label>
+            <input type="url" id="clipUrl" name="Link" placeholder="https://youtube.com/... o https://medal.tv/... o https://streamable.com/..." required>
+          </div>
+          <div class="form-group">
+            <label for="clipCategory">Categoría</label>
+            <select id="clipCategory" name="Categoria" required>
+              <option value="">Seleccioná...</option>
+              <option value="Clutch">Clutch</option>
+              <option value="Sniper">Sniper</option>
+              <option value="Build Fight">Build Fight</option>
+              <option value="End Game">End Game</option>
+              <option value="Fail">Fail</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="clipDesc">Descripción breve (opcional)</label>
+            <textarea id="clipDesc" name="Descripcion" placeholder="Contá qué pasa en el clip..." maxlength="200"></textarea>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="clipTerms" required>
+            <label for="clipTerms">
+              Confirmo que mi clip <strong>no contiene contenido NSFW, violento, con copyright ni datos personales de terceros</strong>. Entiendo que si infrinjo esto, seré sancionado por el staff.
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Enviar clip</button>
+            <div class="form-status" id="clipFormStatus"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="clips-header">
+      <div class="clips-filters" id="clipsFilters">
+        <button data-filter="all" class="active">Todos</button>
+        <button data-filter="Clutch">Clutch</button>
+        <button data-filter="Sniper">Sniper</button>
+        <button data-filter="Build Fight">Build Fight</button>
+        <button data-filter="End Game">End Game</button>
+        <button data-filter="Fail">Fail</button>
+      </div>
+      <div class="clips-filters" id="clipsSort">
+        <button data-sort="new" class="active">Más nuevos</button>
+        <button data-sort="old">Más viejos</button>
+        <button data-sort="az">A - Z</button>
+      </div>
+    </div>
+    <div class="clips-grid" id="clipsGrid"></div>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Streamers Oficiales</h3>
+    <div class="streamers-grid">
+      <div class="streamer-card">
+        <div class="streamer-avatar">
+  <span class="fallback">C</span>
+  <img src="https://files.kick.com/images/user/32940368/profile_image/conversion/efb9a77a-cf62-441a-8eb1-799a91f6e75e-fullsize.webp" alt="CSseba" loading="lazy" onerror="this.style.display='none'">
+  <div class="live-dot"></div>
+</div>        <h3>CSseba</h3>
+        <p class="streamer-role">GTA V Roleplay</p>
+        <p class="streamer-desc">Streamea GTA V Roleplay en Kick. Seguilo para ver sus transmisiones en vivo.</p>
+        <div class="streamer-links">
+          <a href="https://kick.com/csseba" class="btn" target="_blank" rel="noopener noreferrer">Ver en Kick</a>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Sistema de Referidos</h3>
+    <div class="referidos-box">
+      <p>Invitá a tus amigos al Discord y ganá recompensas. Cuantos más refieras, mejor tu rango.</p>
+      <div class="referido-link-box">
+        <input type="text" id="referidoLink" readonly>
+        <button class="btn" id="copyReferidoBtn">Copiar link</button>
+      </div>
+      <div class="referido-stats">
+        <div class="referido-stat">
+          <span class="referido-num" id="referidoCount">0</span>
+          <span class="referido-label">Referidos</span>
+        </div>
+        <div class="referido-stat">
+          <span class="referido-num" id="referidoRank">Principiante</span>
+          <span class="referido-label">Tu rango</span>
+        </div>
+      </div>
+      <div class="referido-info">
+        <h4>Cómo funciona</h4>
+        <ol>
+          <li>Copiá tu link único de referido.</li>
+          <li>Compartilo con tus amigos.</li>
+          <li>Cuando entren al Discord, contás +1.</li>
+          <li>Recompensas:
+            <ul>
+              <li><strong>1 referido:</strong> rol Recluta en Discord</li>
+              <li><strong>5 referidos:</strong> rol Embajador + mención</li>
+              <li><strong>10 referidos:</strong> rol Leyenda + sorteo especial</li>
+              <li><strong>25 referidos:</strong> Staff Honorario + premio</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+      <div class="referido-share">
+        <button class="btn btn-outline" data-share="discord">Discord</button>
+        <button class="btn btn-outline" data-share="whatsapp">WhatsApp</button>
+        <button class="btn btn-outline" data-share="x">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bloque-divider"></div>
+
+  <!-- ============ SOPORTE ============ -->
+  <div class="bloque reveal" id="soporte">
+    <div class="bloque-header">
+      <h2 class="bloque-titulo">Soporte</h2>
+      <p class="bloque-sub">Postulate al staff, abrí un ticket o consultá las preguntas frecuentes.</p>
+    </div>
+
+    <h3 class="seccion-titulo">Postulación a Staff</h3>
+    <div class="form-container">
+      <h3>Sumate al equipo</h3>
+      <p>Completá el formulario y te contactamos por Discord.</p>
+      <form id="staffForm">
+        <div class="form-group">
+          <label for="staffName">Nombre / Tag de Discord</label>
+          <input type="text" id="staffName" name="Nombre" placeholder="Ej: Jovaan#1234" required>
+        </div>
+        <div class="form-group">
+          <label for="staffAge">Edad</label>
+          <input type="number" id="staffAge" name="Edad" min="13" max="99" placeholder="Ej: 18" required>
+        </div>
+        <div class="form-group">
+          <label for="staffRole">Rol al que postulás</label>
+          <select id="staffRole" name="Rol" required>
+            <option value="">Seleccioná...</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Moderador">Moderador</option>
+            <option value="Staff de Sesión">Staff de Sesión</option>
+            <option value="Creador de Contenido">Creador de Contenido</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="staffExp">Experiencia previa</label>
+          <textarea id="staffExp" name="Experiencia" placeholder="Contanos si tuviste experiencia en otros servidores..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="staffWhy">¿Por qué querés ser parte del staff?</label>
+          <textarea id="staffWhy" name="Motivo" placeholder="Contanos tu motivación..." required></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Enviar postulación</button>
+          <div class="form-status" id="formStatus"></div>
+        </div>
+      </form>
+    </div>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Soporte y Tickets</h3>
+    <div class="form-container" style="text-align:center;">
+      <p style="color:var(--text-soft); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">
+        ¿Tenés una duda, problema o querés reportar algo? Abrí un ticket en nuestro Discord y el staff te atiende lo antes posible.
+      </p>
+      <a href="https://discord.gg/zMFhSRBjVB" class="btn" target="_blank" rel="noopener noreferrer">Abrir ticket en Discord</a>
+    </div>
+
+    <h3 class="seccion-titulo" style="margin-top: 4rem;">Preguntas Frecuentes</h3>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        ¿Puedo cambiar de dúo / trío a mitad de sesión?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">Sí, podés cambiar de compañero. Avisá si es necesario y mantené el buen ambiente.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        ¿Puedo jugar solo?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">Sí. Ahora tenemos modalidad Solo con el mismo horario que Dúo y Trío.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        ¿Qué pasa si llego tarde al check-in?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">Si el check-in ya cerró, no podés entrar a esa sesión.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        ¿Cómo se aplican las sanciones?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">El staff revisa cada caso. La sanción puede ir desde una advertencia hasta ban temporal o permanente.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        ¿Tengo que estar verificado para jugar?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">Sí. Todos deben estar verificados con Yunite. Sin verificación no hay check-in.</div>
+    </div>
+  </div>
+
+  <div class="bloque-divider"></div>
+
+  <!-- ============ REGLAS ============ -->
+  <div class="bloque reveal" id="reglas">
+    <div class="bloque-header">
+      <h2 class="bloque-titulo">Reglas de Sesión</h2>
+      <p class="bloque-sub">Buscamos mantener un entorno competitivo, ordenado y limpio. Al participar, aceptás estas normas.</p>
+    </div>
+
+    <div class="reglas-search">
+      <span class="icon">BUSCAR</span>
+      <input type="text" id="reglasSearch" placeholder="Escribí una regla... (ej: rush, third party, spots)">
+      <span class="clear" id="clearSearch">X</span>
+    </div>
+
+    <div class="no-results" id="noResults">No se encontraron reglas con ese término.</div>
+
+    <div class="reglas-container" id="reglasContainer">
+      <div class="regla-categoria" data-search="participación verificados discord baneado registro spot asignado equipo">
+        <button class="regla-header">Participación <span class="arrow">V</span></button>
+        <div class="regla-body">
+          <ul>
+            <li>Ambos integrantes del equipo deben estar <strong>verificados en Discord</strong> para poder participar.</li>
+            <li>Está prohibido participar mientras se encuentra <strong>baneado</strong>.</li>
+            <li>No está permitido jugar junto a un jugador baneado.</li>
+            <li>Solo <strong>uno de los integrantes del equipo</strong> debe realizar el registro.</li>
+            <li>El equipo deberá respetar el <strong>spot asignado</strong> durante toda la sesión.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="regla-categoria" data-search="early game zona loot drop third party rush daño spots aterrizaje landing tagear">
+        <button class="regla-header">Early Game — 1.ª a 2.ª Zona <span class="arrow">V</span></button>
+        <div class="regla-body">
+          <p>El objetivo es permitir que cada equipo haga su loot sin interferencias innecesarias.</p>
+          <ul>
+            <li><strong>Third Party:</strong> No está permitido intervenir en un spot que ya esté en pelea.</li>
+            <li><strong>Rush:</strong> No se puede iniciar un rush sin haber hecho <strong>150 de daño</strong> al rival.</li>
+            <li><strong>Spots asignados:</strong> Aterrizá en el spot que tengas asignado.</li>
+            <li><strong>Drops divididos:</strong> No se puede pelear si el rival hizo drop dividido.</li>
+            <li><strong>Tagear spots:</strong> No se puede disparar a un spot en disputa.</li>
+            <li><strong>Landing:</strong> Se puede disparar al aterrizar, sin interferir deliberadamente.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="regla-categoria" data-search="mid game zona rotación posicionamiento decisiones cards minuto peleas rush">
+        <button class="regla-header">Mid Game — 2.ª a 5.ª Zona <span class="arrow">V</span></button>
+        <div class="regla-body">
+          <p>Priorizá rotación, posicionamiento y decisiones por encima de peleas innecesarias.</p>
+          <ul>
+            <li><strong>Cards:</strong> No más de <strong>1 minuto</strong> sobre la card del rival.</li>
+            <li><strong>Peleas innecesarias:</strong> No forzar peleas sin razón estratégica.</li>
+            <li><strong>Rush innecesario:</strong> No rushear solo por buscar eliminación.</li>
+            <li><strong>Peleas justificadas:</strong> Rotación, posicionamiento o recursos son válidos.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="regla-categoria" data-search="staff sanciones revisión contexto decisión final advertencia ban">
+        <button class="regla-header">Staff y Sanciones <span class="arrow">V</span></button>
+        <div class="regla-body">
+          <ul>
+            <li>Todas las situaciones serán revisadas por el <strong>Staff</strong>.</li>
+            <li>El Staff analiza contexto, intención y situación de la infracción.</li>
+            <li><strong>El Staff tiene la decisión final</strong> sobre sanciones.</li>
+          </ul>
+          <div class="regla-nota">Las sanciones varían según gravedad y reincidencia.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#comunidad">Comunidad</a>
+      <a href="#contenido">Contenido</a>
+      <a href="#soporte">Soporte</a>
+      <a href="#reglas">Reglas</a>
+      <a href="https://discord.gg/zMFhSRBjVB" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+    <p>© 2026 NEW SCRIMS</p>
+    <p style="margin-top: 0.4rem;">Scrims competitivas · Fair Play · Argentina (ART)</p>
+  </footer>
+
+  <a href="#" class="float-home" id="floatHome" title="Volver al inicio" aria-label="Volver al inicio">INICIO</a>
+  <button class="back-to-top" id="backToTop" aria-label="Volver arriba">^</button>
+  <a href="https://discord.gg/zMFhSRBjVB" class="float-discord" target="_blank" rel="noopener noreferrer" title="Unite al Discord">DC</a>
+
+  <div class="toast" id="toast">Link copiado</div>
+
+  <script>
+    /* ========== BLOQUEOS ========== */
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+      if (
+        (e.ctrlKey && ['c','u','s','a'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    /* ========== CLIPS ========== */
+    const CLIPS_APROBADOS = [];
+
+    function detectarPlataforma(url) {
+      const u = url.toLowerCase();
+      if (u.includes('youtube.com') || u.includes('youtu.be')) return 'YouTube';
+      if (u.includes('medal.tv')) return 'Medal';
+      if (u.includes('streamable.com')) return 'Streamable';
+      if (u.includes('twitch.tv')) return 'Twitch';
+      if (u.includes('tiktok.com')) return 'TikTok';
+      if (u.includes('twitter.com') || u.includes('x.com')) return 'X';
+      if (u.includes('instagram.com')) return 'Instagram';
+      if (u.includes('kick.com')) return 'Kick';
+      if (u.includes('facebook.com')) return 'Facebook';
+      if (u.includes('vimeo.com')) return 'Vimeo';
+      if (u.includes('drive.google.com')) return 'Google Drive';
+      return 'Otro';
+    }
+
+    function generarEmbed(url) {
+      const u = url.toLowerCase();
+      let ytId = null;
+      const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+      if (ytMatch) ytId = ytMatch[1];
+      if (ytId) return `<iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen loading="lazy"></iframe>`;
+
+      const twitchMatch = url.match(/twitch\.tv\/videos\/(\d+)/);
+      if (twitchMatch) return `<iframe src="https://player.twitch.tv/?video=${twitchMatch[1]}&parent=${location.hostname}" allowfullscreen loading="lazy"></iframe>`;
+      const twitchClip = url.match(/twitch\.tv\/(?:[^\/]+\/clip\/|clip\/)([A-Za-z0-9_-]+)/);
+      if (twitchClip) return `<iframe src="https://clips.twitch.tv/embed?clip=${twitchClip[1]}&parent=${location.hostname}" allowfullscreen loading="lazy"></iframe>`;
+
+      const streamableMatch = url.match(/streamable\.com\/([A-Za-z0-9]+)/);
+      if (streamableMatch) return `<iframe src="https://streamable.com/e/${streamableMatch[1]}" allowfullscreen loading="lazy"></iframe>`;
+
+      if (u.includes('medal.tv')) return `<iframe src="${url}" allowfullscreen loading="lazy"></iframe>`;
+
+      const kickMatch = url.match(/kick\.com\/video\/([A-Za-z0-9_-]+)/);
+      if (kickMatch) return `<iframe src="https://player.kick.com/${kickMatch[1]}" allowfullscreen loading="lazy"></iframe>`;
+
+      const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+      if (vimeoMatch) return `<iframe src="https://player.vimeo.com/video/${vimeoMatch[1]}" allowfullscreen loading="lazy"></iframe>`;
+
+      const driveMatch = url.match(/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
+      if (driveMatch) return `<iframe src="https://drive.google.com/file/d/${driveMatch[1]}/preview" allowfullscreen loading="lazy"></iframe>`;
+
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--pink); font-weight:600; text-decoration:none;">Ver en ${detectarPlataforma(url)}</a>`;
+    }
+
+    let filtroActual = 'all';
+    let ordenActual = 'new';
+
+    function renderClips() {
+      const grid = document.getElementById('clipsGrid');
+      let clips = [...CLIPS_APROBADOS];
+      if (filtroActual !== 'all') clips = clips.filter(c => c.categoria === filtroActual);
+      if (ordenActual === 'new') clips.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      else if (ordenActual === 'old') clips.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      else if (ordenActual === 'az') clips.sort((a, b) => a.titulo.localeCompare(b.titulo));
+
+      if (clips.length === 0) {
+        grid.innerHTML = '<div class="no-clips">Todavía no hay clips aprobados en esta categoría.<br>Sé el primero en subir uno.</div>';
+        return;
+      }
+
+      grid.innerHTML = clips.map(c => `
+        <div class="clip-card">
+          <div class="clip-embed">${generarEmbed(c.link)}</div>
+          <div class="clip-info">
+            <span class="clip-platform">${c.plataforma}</span>
+            <h3>${c.titulo}</h3>
+            <div class="clip-author">por ${c.nick}</div>
+            <div class="clip-desc">${c.descripcion || ''}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.querySelectorAll('#clipsFilters button').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('#clipsFilters button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        filtroActual = b.dataset.filter;
+        renderClips();
+      });
+    });
+
+    document.querySelectorAll('#clipsSort button').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('#clipsSort button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        ordenActual = b.dataset.sort;
+        renderClips();
+      });
+    });
+
+    const openClipForm = document.getElementById('openClipForm');
+    const clipFormWrap = document.getElementById('clipFormWrap');
+    openClipForm.addEventListener('click', () => {
+      clipFormWrap.style.display = clipFormWrap.style.display === 'none' ? 'block' : 'none';
+    });
+
+    const clipForm = document.getElementById('clipForm');
+    const clipFormStatus = document.getElementById('clipFormStatus');
+    const CLIP_WEBHOOK_URL = 'https://discord.com/api/webhooks/1552873682349592636/KTax-gl59X_gqJYG7PhuNjWqR52_tCGCnkXXaEB15J0pnRa0z6mT0PvqBCY85Zuc_P6c';
+
+    clipForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clipFormStatus.textContent = 'Enviando...';
+      clipFormStatus.className = 'form-status';
+      const data = new FormData(clipForm);
+      const link = data.get('Link');
+      const plataforma = detectarPlataforma(link);
+      const body = {
+        username: 'NEW SCRIMS · Clips',
+        embeds: [{
+          title: 'Nuevo clip pendiente de revisión',
+          color: 0xff9ecd,
+          fields: [
+            { name: 'Nick', value: data.get('Nick') || '-', inline: true },
+            { name: 'Categoría', value: data.get('Categoria') || '-', inline: true },
+            { name: 'Plataforma', value: plataforma, inline: true },
+            { name: 'Título', value: data.get('Titulo') || '-', inline: false },
+            { name: 'Descripción', value: data.get('Descripcion') || '(sin descripción)', inline: false },
+            { name: 'Link', value: link, inline: false }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: { text: 'NEW SCRIMS · Formulario de clips' }
+        }]
+      };
+      try {
+        const res = await fetch(CLIP_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (res.ok) {
+          clipFormStatus.textContent = 'Clip enviado. El staff lo revisará antes de publicarlo.';
+          clipFormStatus.className = 'form-status success';
+          clipForm.reset();
+        } else throw new Error();
+      } catch {
+        clipFormStatus.textContent = 'Error al enviar. Probá de nuevo o contactanos en Discord.';
+        clipFormStatus.className = 'form-status error';
+      }
+    });
+
+    renderClips();
+
+    /* ========== REFERIDOS ========== */
+    const DISCORD_INVITE_BASE = 'https://discord.gg/zMFhSRBjVB';
+    function getReferidoId() {
+      let id = localStorage.getItem('ns_referido_id');
+      if (!id) {
+        id = 'user' + Math.random().toString(36).substring(2, 8);
+        localStorage.setItem('ns_referido_id', id);
+      }
+      return id;
+    }
+    const referidoId = getReferidoId();
+    const referidoLink = `${DISCORD_INVITE_BASE}?ref=${referidoId}`;
+    const referidoInput = document.getElementById('referidoLink');
+    if (referidoInput) referidoInput.value = referidoLink;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const refFrom = urlParams.get('ref');
+    if (refFrom) {
+      localStorage.setItem('ns_referido_por', refFrom);
+      setTimeout(() => {
+        const t = document.getElementById('toast');
+        if (t) {
+          t.textContent = 'Viniste referido por ' + refFrom + '. ¡Bienvenido!';
+          t.classList.add('show');
+          setTimeout(() => t.classList.remove('show'), 3000);
+        }
+      }, 1500);
+    }
+
+    let referidosCount = parseInt(localStorage.getItem('ns_referidos_count') || '0');
+    const referidoCountEl = document.getElementById('referidoCount');
+    const referidoRankEl = document.getElementById('referidoRank');
+
+    function getRank(count) {
+      if (count >= 25) return 'Staff Honorario';
+      if (count >= 10) return 'Leyenda';
+      if (count >= 5) return 'Embajador';
+      if (count >= 1) return 'Recluta';
+      return 'Principiante';
+    }
+    function updateReferidosUI() {
+      if (referidoCountEl) referidoCountEl.textContent = referidosCount;
+      if (referidoRankEl) referidoRankEl.textContent = getRank(referidosCount);
+    }
+    updateReferidosUI();
+
+    const copyReferidoBtn = document.getElementById('copyReferidoBtn');
+    if (copyReferidoBtn) {
+      copyReferidoBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(referidoLink).then(() => {
+          const t = document.getElementById('toast');
+          t.textContent = '¡Link de referido copiado!';
+          t.classList.add('show');
+          setTimeout(() => t.classList.remove('show'), 2000);
+        });
+      });
+    }
+
+    document.querySelectorAll('.referido-share [data-share]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const share = btn.dataset.share;
+        const msg = encodeURIComponent('¡Unite a NEW SCRIMS, la mejor comunidad de scrims de Fortnite! ' + referidoLink);
+        let url = '';
+        if (share === 'discord') {
+          navigator.clipboard.writeText(referidoLink);
+          const t = document.getElementById('toast');
+          t.textContent = 'Link copiado. Pegalo en Discord.';
+          t.classList.add('show');
+          setTimeout(() => t.classList.remove('show'), 2000);
+          return;
+        }
+        if (share === 'whatsapp') url = 'https://wa.me/?text=' + msg;
+        if (share === 'x') url = 'https://twitter.com/intent/tweet?text=' + msg;
+        if (url) window.open(url, '_blank');
+      });
+    });
+
+    /* ========== CURSOR ========== */
+    const cursorRing = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+      (function animateRing() {
+        ringX += (mouseX - ringX) * 0.22;
+        ringY += (mouseY - ringY) * 0.22;
+        cursorRing.style.left = ringX + 'px';
+        cursorRing.style.top = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      })();
+      document.querySelectorAll('a, button, .btn, .faq-question, .regla-header, .card-item, .streamer-card').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+      });
+    }
+
+    /* ========== PROGRESO ========== */
+    const scrollProgress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      scrollProgress.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + '%';
+    });
+
+    /* ========== THEME ========== */
+    const themeToggle = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+      themeToggle.textContent = 'NOCHE';
+    } else {
+      themeToggle.textContent = 'DIA';
+    }
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const isLight = document.body.classList.contains('light');
+      themeToggle.textContent = isLight ? 'NOCHE' : 'DIA';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+    /* ========== TYPEWRITER ========== */
+    const typeEl = document.getElementById('typewriter');
+    const frases = ['Sesiones ordenadas.', 'Fair play real.', 'Nivel alto.', 'Dúo, Trío, Solo y Reload.'];
+    let fi = 0, ci = 0, del = false;
+    (function typeLoop() {
+      const f = frases[fi];
+      if (!del) {
+        typeEl.textContent = f.slice(0, ++ci);
+        if (ci === f.length) { del = true; setTimeout(typeLoop, 1600); return; }
+      } else {
+        typeEl.textContent = f.slice(0, --ci);
+        if (ci === 0) { del = false; fi = (fi + 1) % frases.length; }
+      }
+      setTimeout(typeLoop, del ? 35 : 70);
+    })();
+
+    /* ========== STATS ========== */
+    function animateStat(el) {
+      if (el.dataset.done) return;
+      el.dataset.done = '1';
+      if (el.dataset.count) {
+        const target = parseInt(el.dataset.count);
+        const prefix = el.dataset.prefix || '';
+        let cur = 0;
+        const step = Math.ceil(target / 60);
+        const t = setInterval(() => {
+          cur += step;
+          if (cur >= target) { cur = target; clearInterval(t); }
+          el.textContent = prefix + cur.toLocaleString('es-AR');
+        }, 25);
+      } else if (el.dataset.text) {
+        const text = el.dataset.text;
+        let i = 0; el.textContent = '';
+        const t = setInterval(() => {
+          el.textContent = text.slice(0, ++i);
+          if (i === text.length) clearInterval(t);
+        }, 60);
+      }
+    }
+
+    /* ========== RIPPLE ========== */
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    /* ========== GLOW ========== */
+    document.querySelectorAll('.card-item, .streamer-card').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+        el.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+      });
+    });
+
+    /* ========== MENÚ ========== */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+    document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
+      navLinks.classList.remove('active'); hamburger.classList.remove('active');
+    }));
+
+    /* ========== FAQ ========== */
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const active = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (!active) { item.classList.add('active'); q.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+
+    /* ========== REGLAS ========== */
+    document.querySelectorAll('.regla-header').forEach(h => {
+      h.addEventListener('click', () => h.parentElement.classList.toggle('active'));
+    });
+
+    const searchInput = document.getElementById('reglasSearch');
+    const clearBtn = document.getElementById('clearSearch');
+    const noResults = document.getElementById('noResults');
+    const categorias = document.querySelectorAll('.regla-categoria');
+
+    function filterReglas(term) {
+      const t = term.toLowerCase().trim();
+      if (!t) {
+        categorias.forEach(c => { c.classList.remove('hidden'); c.classList.add('active'); });
+        noResults.classList.remove('visible');
+        return;
+      }
+      let found = 0;
+      categorias.forEach(c => {
+        const haystack = (c.dataset.search + ' ' + c.textContent).toLowerCase();
+        const match = haystack.includes(t);
+        c.classList.toggle('hidden', !match);
+        if (match) { c.classList.add('active'); found++; }
+      });
+      noResults.classList.toggle('visible', found === 0);
+    }
+    searchInput.addEventListener('input', (e) => {
+      filterReglas(e.target.value);
+      clearBtn.classList.toggle('visible', e.target.value.length > 0);
+    });
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = ''; filterReglas('');
+      clearBtn.classList.remove('visible');
+    });
+
+    /* ========== FORM STAFF ========== */
+    const staffForm = document.getElementById('staffForm');
+    const formStatus = document.getElementById('formStatus');
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1552873682349592636/KTax-gl59X_gqJYG7PhuNjWqR52_tCGCnkXXaEB15J0pnRa0z6mT0PvqBCY85Zuc_P6c';
+
+    staffForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formStatus.textContent = 'Enviando...';
+      formStatus.className = 'form-status';
+      const data = new FormData(staffForm);
+      const fields = [
+        { name: 'Nombre / Tag', value: data.get('Nombre') },
+        { name: 'Edad', value: data.get('Edad') },
+        { name: 'Rol', value: data.get('Rol') },
+        { name: 'Experiencia', value: data.get('Experiencia') },
+        { name: 'Motivo', value: data.get('Motivo') }
+      ];
+      const body = {
+        username: 'NEW SCRIMS · Postulaciones',
+        embeds: [{
+          title: 'Nueva postulación a Staff',
+          color: 0xff9ecd,
+          fields: fields.map(f => ({ name: f.name, value: String(f.value || 'Sin responder'), inline: false })),
+          timestamp: new Date().toISOString(),
+          footer: { text: 'NEW SCRIMS · Formulario web' }
+        }]
+      };
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (res.ok) {
+          formStatus.textContent = 'Postulación enviada. Te contactamos pronto.';
+          formStatus.className = 'form-status success';
+          staffForm.reset();
+        } else throw new Error();
+      } catch {
+        formStatus.textContent = 'Error al enviar. Probá de nuevo o contactanos en Discord.';
+        formStatus.className = 'form-status error';
+      }
+    });
+
+    /* ========== COPIAR DISCORD ========== */
+    document.getElementById('copyDiscordBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText('https://discord.gg/zMFhSRBjVB').then(() => {
+        const t = document.getElementById('toast');
+        t.textContent = 'Link copiado';
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2000);
+      });
+    });
+
+    /* ========== VOLVER ARRIBA ========== */
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ========== REVEAL ========== */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('visible');
+          en.target.querySelectorAll('.stat-number').forEach(animateStat);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ========== COUNTDOWN ========== */
+    let countdownType = 'duo';
+    document.querySelectorAll('#countdownSelector button').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('#countdownSelector button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        countdownType = b.dataset.type;
+        document.getElementById('countdownType').textContent = b.textContent;
+        updateCountdown();
+      });
+    });
+
+    function getNextScrim() {
+      const now = new Date();
+      const artOffset = -3 * 60;
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const art = new Date(utc + (artOffset * 60000));
+      function makeDate(d, h, m) {
+        const date = new Date(art);
+        date.setDate(art.getDate() + d);
+        date.setHours(h, m, 0, 0);
+        return date;
+      }
+      let candidates = [];
+      const horarios = {
+        duo: { dias: [1,2,3,4,5], hora: 17, min: 0 },
+        trio: { dias: [1,2,3,4,5], hora: 17, min: 0 },
+        solo: { dias: [1,2,3,4,5], hora: 17, min: 0 },
+        reload: { dias: [5,6,0], hora: 18, min: 20 }
+      };
+      const cfg = horarios[countdownType] || horarios.duo;
+      for (let i = 0; i <= 7; i++) {
+        const d = new Date(art);
+        d.setDate(art.getDate() + i);
+        const dow = d.getDay();
+        if (cfg.dias.includes(dow)) {
+          const target = makeDate(i, cfg.hora, cfg.min);
+          if (target > art) candidates.push(target);
+        }
+      }
+      candidates.sort((a, b) => a - b);
+      return candidates[0] || makeDate(1, 17, 0);
+    }
+
+    function updateCountdown() {
+      const target = getNextScrim();
+      const now = new Date();
+      const artOffset = -3 * 60;
+      const utcNow = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const artNow = new Date(utcNow + (artOffset * 60000));
+      const dist = target - artNow;
+      const el = document.getElementById('countdown');
+      if (dist < 0) { el.textContent = "La scrim ya empezó"; return; }
+      const d = Math.floor(dist / (1000 * 60 * 60 * 24));
+      const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((dist % (1000 * 60)) / 1000);
+      el.textContent = (d > 0 ? d + 'd ' : '') +
+        `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ========== DISCORD LIVE ========== */
+    const GUILD_ID = '1150095239550337154';
+    const totalMiembros = 12587;
+    const elOnline = document.getElementById('discordMembers');
+    const elTotal = document.getElementById('discordTotal');
+    elTotal.textContent = totalMiembros.toLocaleString('es-AR');
+    fetch(`https://discord.com/api/guilds/${GUILD_ID}/widget.json`)
+      .then(r => r.json())
+      .then(data => {
+        if (data && typeof data.presence_count === 'number') {
+          elOnline.textContent = data.presence_count >= 500 ? '500+' : data.presence_count;
+        }
+      })
+      .catch(() => {});
+
+    /* ========== CONFETTI ========== */
+    function launchConfetti() {
+      const colors = ['#ff9ecd', '#ffb3d9', '#ff6fb3', '#ffffff', '#ffd1e8'];
+      for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+          const c = document.createElement('div');
+          c.className = 'confetti';
+          c.style.left = Math.random() * 100 + 'vw';
+          c.style.background = colors[Math.floor(Math.random() * colors.length)];
+          c.style.width = (Math.random() * 8 + 6) + 'px';
+          c.style.height = (Math.random() * 8 + 6) + 'px';
+          c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+          c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 4000);
+        }, i * 20);
+      }
+    }
+    document.querySelectorAll('#joinBtn, #joinBtn2').forEach(b => {
+      b.addEventListener('click', launchConfetti);
+    });
+
+    /* ========== KONAMI ========== */
+    const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let konamiIdx = 0;
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konami[konamiIdx]) {
+        konamiIdx++;
+        if (konamiIdx === konami.length) {
+          document.body.classList.toggle('tryhard');
+          const t = document.getElementById('toast');
+          t.textContent = document.body.classList.contains('tryhard') ? 'MODO TRYHARD ACTIVADO' : 'Modo normal';
+          t.classList.add('show');
+          setTimeout(() => t.classList.remove('show'), 2500);
+          konamiIdx = 0;
+        }
+      } else { konamiIdx = 0; }
+    });
+  </script>
+</body>
+</html>
